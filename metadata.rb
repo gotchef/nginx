@@ -1,4 +1,4 @@
-name             'nginx-kn'
+name             'nginx'
 maintainer       'Krave-n'
 maintainer_email 'franklin@krave-n.com'
 license          'Copyright 2014, Krave-n'
