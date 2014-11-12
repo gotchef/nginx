@@ -11,7 +11,7 @@ define :configure_site do
 		action :nothing # only define so that it can be restarted if the config changed
 	end
 
-	template "#{node[:nginx][:conf_dir]}/enabled-sites/#{site_domain}" do
+	template "#{node[:nginx][:conf_dir]}/sites-enabled/#{site_domain}" do
 		cookbook	"#{template_cookbook}"
 		source		"#{site_domain}.erb"
 		owner		node[:nginx][:user]
