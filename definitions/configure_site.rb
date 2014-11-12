@@ -38,7 +38,7 @@ define :configure_site do
 		content ssh_cert
 	end
 
-	file File.join('/etc/pki/tls/private/', "#{site_name}.ssl.key") do
+	file File.join('/etc/pki/tls/private/', "#{site_domain}.ssl.key") do
 		mode    '0640'
 		owner   node[:nginx][:user]
 		group   node[:nginx][:group]
