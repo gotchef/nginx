@@ -1,7 +1,7 @@
 
 user <%= node['nginx']['user'] %><% if node['nginx']['user'] != node['nginx']['group'] %> <%= node['nginx']['group'] %><% end %>;
 worker_processes  <%= node['nginx']['worker_processes'] %>;
-
+daemon off;
 error_log  <%= node['nginx']['log_dir'] %>/error.log<% if node['nginx']['error_log_options'] %> <%= node['nginx']['error_log_options'] %><% end %>;
 pid        <%= node['nginx']['pid'] %>;
 
