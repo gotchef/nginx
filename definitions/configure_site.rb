@@ -1,6 +1,6 @@
 
 define :configure_site do
-	site_domain = params[:name] # api.woah.com
+	site_domain = params[:site_domain] # api.woah.com
 	template_cookbook = params[:template_cookbook]
 	hosts = params[:hosts] # gets passed to template
 	ssh_cert = params[:ssh_cert] # chained cert
