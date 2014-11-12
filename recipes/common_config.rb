@@ -14,7 +14,7 @@ template "#{node[:nginx][:conf_dir]}/nginx.conf" do
   group		'root'
   mode		'644'
   action	:create
-  notifies :restart, 'service[nginx]'
+  notifies :restart, 'runit_service[nginx]'
 end
 
 cookbook_file "#{node[:nginx][:conf_dir]}/mime.types" do
@@ -22,7 +22,7 @@ cookbook_file "#{node[:nginx][:conf_dir]}/mime.types" do
   owner  'root'
   group  'root'
   mode   '644'
-  notifies :reload, 'service[nginx]'
+  notifies :restart, 'runit_service[nginx]'
 end
 
 

@@ -74,7 +74,7 @@ execute "make install #{tarball}" do
   user "root"
   group "root"
 #  not_if {(target and File.exists?(target))}
-#  notifies :restart, 'service[nginx]'
+  notifies :restart, 'runit_service[nginx]'
 end
 
 include_recipe 'nginx::common_config'
