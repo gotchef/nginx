@@ -31,18 +31,19 @@ define :configure_site do
 		recursive true
 	end
 
-	file File.join('/etc/pki/tls/certs/', "#{site_domain}.chained.crt") do
-		mode    '0755'
-		owner   node[:nginx][:user]
-		group   node[:nginx][:group]
-		content ssh_cert
-	end
+	if !ssh_cert.nil? && !shh_cert.empty?
+		file File.join('/etc/pki/tls/certs/', "#{site_domain}.chained.crt") do
+			mode    '0755'
+			owner   node[:nginx][:user]
+			group   node[:nginx][:group]
+			content ssh_cert
+		end
 
-	file File.join('/etc/pki/tls/private/', "#{site_domain}.ssl.key") do
-		mode    '0640'
-		owner   node[:nginx][:user]
-		group   node[:nginx][:group]
-		content ssh_key
+		file File.join('/etc/pki/tls/private/', "#{site_domain}.ssl.key") do
+			mode    '0640'
+			owner   node[:nginx][:user]
+			group   node[:nginx][:group]
+			content ssh_key
+		end
 	end
-
 end
