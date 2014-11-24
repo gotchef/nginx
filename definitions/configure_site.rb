@@ -2,7 +2,6 @@
 define :configure_site do
 	site_domain = params[:site_domain] # api.woah.com
 	template_cookbook = params[:template_cookbook]
-	hosts = params[:hosts] # gets passed to template
 	ssh_cert = params[:ssh_cert] # chained cert
 	ssh_key = params[:ssh_key] # private key
 
@@ -17,9 +16,6 @@ define :configure_site do
 		owner		node[:nginx][:user]
 		group		node[:nginx][:group]
 		mode		"644"
-		variables({
-			:hosts => hosts,
-		})
 		notifies :restart, "runit_service[nginx]"
 	end
 
