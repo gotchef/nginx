@@ -16,10 +16,11 @@ events {
 }
 
 http {
-  include       <%= node[:nginx][:conf_dir] %>/mime.types;
-  default_type  application/json;
+	index index.html index.htm;
+	include       <%= node[:nginx][:conf_dir] %>/mime.types;
+	default_type  application/octet-stream;
 
-log_format json '{"txid" : "$txid", '
+	log_format json '{"txid" : "$txid", '
         '"status" : \"$status\", '
         '"method" : "$request_method", '
         '"uri" : "$uri", '
@@ -38,54 +39,54 @@ log_format json '{"txid" : "$txid", '
 	proxy_set_header        X-Request-Id $txid;
 
   <% if node['nginx']['disable_access_log'] -%>
-  access_log    off;
+	access_log    off;
   <% else -%>
-  access_log	<%= node['nginx']['log_dir'] %>/access.log<% if node['nginx']['access_log_options'] %> <%= node['nginx']['access_log_options'] %><% end %>;
+	access_log	<%= node['nginx']['log_dir'] %>/access.log<% if node['nginx']['access_log_options'] %> <%= node['nginx']['access_log_options'] %><% end %>;
   <% end %>
 
   <% if node['nginx']['server_tokens'] -%>
-  server_tokens <%= node['nginx']['server_tokens'] %>;
+	server_tokens <%= node['nginx']['server_tokens'] %>;
   <% end -%>
 
-  sendfile <%= node['nginx']['sendfile'] %>;
-  tcp_nopush on;
-  tcp_nodelay on;
+	sendfile <%= node['nginx']['sendfile'] %>;
+	tcp_nopush on;
+	tcp_nodelay on;
 
   <% if node['nginx']['keepalive'] == 'on' %>
-  keepalive_timeout  <%= node['nginx']['keepalive_timeout'] %>;
+	keepalive_timeout  <%= node['nginx']['keepalive_timeout'] %>;
   <% end %>
 
-  gzip  <%= node['nginx']['gzip'] %>;
+	gzip  <%= node['nginx']['gzip'] %>;
   <% if node['nginx']['gzip'] == 'on' %>
-  gzip_http_version <%= node['nginx']['gzip_http_version'] %>;
-  gzip_comp_level <%= node['nginx']['gzip_comp_level'] %>;
-  gzip_proxied <%= node['nginx']['gzip_proxied'] %>;
-  gzip_vary <%= node['nginx']['gzip_vary'] %>;
-  <% if node['nginx']['gzip_buffers'] -%>
-  gzip_buffers <%= node['nginx']['gzip_buffers'] %>;
-  <% end -%>
-  gzip_types <%= node['nginx']['gzip_types'].join(' ') %>;
-  gzip_min_length  <%= node['nginx']['gzip_min_length'] %>;
-  gzip_disable     "<%= node['nginx']['gzip_disable'] %>";
-  <% end %>
-
-  server_names_hash_bucket_size <%= node['nginx']['server_names_hash_bucket_size'] %>;
-  types_hash_max_size <%= node['nginx']['types_hash_max_size'] %>;
-  types_hash_bucket_size <%= node['nginx']['types_hash_bucket_size'] %>;
-  <% if node['nginx']['proxy_read_timeout'] -%>
-  proxy_read_timeout <%= node['nginx']['proxy_read_timeout'] %>;
-  <% end -%>
-  <% if node['nginx']['client_body_buffer_size'] -%>
-  client_body_buffer_size <%= node['nginx']['client_body_buffer_size'] %>;
-  <% end -%>
-  <% if node['nginx']['client_max_body_size'] -%>
-  client_max_body_size <%= node['nginx']['client_max_body_size'] %>;
-  <% end -%>
-
-  <% if node['nginx']['enable_rate_limiting'] -%>
-  limit_req_zone $binary_remote_addr zone=<%= node['nginx']['rate_limiting_zone_name'] %>:<%= node['nginx']['rate_limiting_backoff'] %> rate=<%= node['nginx']['rate_limit'] %>;
-
-  <% end -%>
-  include <%= node[:nginx][:conf_dir] %>/conf.d/*.conf;
-  include <%= node[:nginx][:conf_dir] %>/sites-enabled/*;
+	gzip_http_version <%= node['nginx']['gzip_http_version'] %>;
+	gzip_comp_level <%= node['nginx']['gzip_comp_level'] %>;
+	gzip_proxied <%= node['nginx']['gzip_proxied'] %>;
+	gzip_vary <%= node['nginx']['gzip_vary'] %>;
+	<% if node['nginx']['gzip_buffers'] -%>
+	gzip_buffers <%= node['nginx']['gzip_buffers'] %>;
+	<% end -%>
+	gzip_types <%= node['nginx']['gzip_types'].join(' ') %>;
+	gzip_min_length  <%= node['nginx']['gzip_min_length'] %>;
+	gzip_disable     "<%= node['nginx']['gzip_disable'] %>";
+	<% end %>
+	
+	server_names_hash_bucket_size <%= node['nginx']['server_names_hash_bucket_size'] %>;
+	types_hash_max_size <%= node['nginx']['types_hash_max_size'] %>;
+	types_hash_bucket_size <%= node['nginx']['types_hash_bucket_size'] %>;
+	<% if node['nginx']['proxy_read_timeout'] -%>
+	proxy_read_timeout <%= node['nginx']['proxy_read_timeout'] %>;
+	<% end -%>
+	<% if node['nginx']['client_body_buffer_size'] -%>
+	client_body_buffer_size <%= node['nginx']['client_body_buffer_size'] %>;
+	<% end -%>
+	<% if node['nginx']['client_max_body_size'] -%>
+	client_max_body_size <%= node['nginx']['client_max_body_size'] %>;
+	<% end -%>
+	
+	<% if node['nginx']['enable_rate_limiting'] -%>
+	limit_req_zone $binary_remote_addr zone=<%= node['nginx']['rate_limiting_zone_name'] %>:<%= node['nginx']['rate_limiting_backoff'] %> rate=<%= node['nginx']['rate_limit'] %>;
+	
+	<% end -%>
+	include <%= node[:nginx][:conf_dir] %>/conf.d/*.conf;
+	include <%= node[:nginx][:conf_dir] %>/sites-enabled/*;
 }
