@@ -27,7 +27,7 @@ define :configure_site do
 		recursive true
 	end
 
-	if !ssh_cert.nil? && !shh_cert.empty?
+	if !ssh_cert.to_s.empty?
 		file File.join('/etc/pki/tls/certs/', "#{site_domain}.chained.crt") do
 			mode    '0755'
 			owner   node[:nginx][:user]
