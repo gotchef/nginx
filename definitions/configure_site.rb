@@ -4,6 +4,7 @@ define :configure_site do
 	template_cookbook = params[:template_cookbook]
 	ssh_cert = params[:ssh_cert] # chained cert
 	ssh_key = params[:ssh_key] # private key
+	hosts = params[:hosts]
 
 	runit_service "nginx" do
 		supports :restart => true, :status => true 
@@ -16,6 +17,9 @@ define :configure_site do
 		owner		node[:nginx][:user]
 		group		node[:nginx][:group]
 		mode		"644"
+		variables(
+			:hosts => hosts
+		)
 		notifies :restart, "runit_service[nginx]"
 	end
 
