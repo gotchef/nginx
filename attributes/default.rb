@@ -36,4 +36,8 @@ default[:nginx][:source][:default_configure_flags] = %W(
   --pid-path=#{node[:nginx][:pid]} 
 )
 
-
+# used to determine what nginx configs to deploy 
+# set using aws-util::opsworks_hosts
+default[:me][:layers] = ['nginx']
+#default template cookbook source
+default[:nginx][:template][:deploy_cookbook] = 'nginx' 
