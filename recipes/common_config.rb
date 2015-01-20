@@ -8,22 +8,20 @@ service "nginx" do
 end
 
 template "#{node[:nginx][:conf_dir]}/nginx.conf" do
-  cookbook	"nginx"
-  source	'nginx.conf.erb'
-  owner		'root'
-  group		'root'
-  mode		'644'
-  action	:create
-  notifies :restart, 'runit_service[nginx]'
+	cookbook	node[:nginx][:templates][:nginx_conf_cookbook]
+	source	'nginx.conf.erb'
+	owner		'root'
+	group		'root'
+	mode		'644'
+	action	:create
+	notifies :restart, 'runit_service[nginx]'
 end
 
 cookbook_file "#{node[:nginx][:conf_dir]}/mime.types" do
-  source 'mime.types'
-  owner  'root'
-  group  'root'
-  mode   '644'
-  notifies :restart, 'runit_service[nginx]'
+	source 'mime.types'
+	owner  'root'
+	group  'root'
+	mode   '644'
+	notifies :restart, 'runit_service[nginx]'
 end
-
-
 

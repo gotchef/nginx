@@ -77,4 +77,9 @@ execute "make install #{tarball}" do
   notifies :restart, 'runit_service[nginx]'
 end
 
+execute 'openssl dhparam -out dhparam.pem 4096' do
+	cwd '/etc/ssl/certs'
+	not_if { ::File.exists?("/etc/ssl/certs/dhparam.pem")}
+end
+
 include_recipe 'nginx::common_config'

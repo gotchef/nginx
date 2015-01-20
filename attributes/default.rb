@@ -40,4 +40,5 @@ default[:nginx][:source][:default_configure_flags] = %W(
 # set using aws-util::opsworks_hosts
 default[:me][:layers] = ['nginx']
 #default template cookbook source
-default[:nginx][:template][:deploy_cookbook] = 'nginx' 
+default[:nginx][:templates][:deploy_cookbook] = 'nginx' 
+default[:nginx][:templates][:nginx_conf_cookbook] = 'nginx' 
