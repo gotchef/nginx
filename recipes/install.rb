@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: nginx
 
+
 #dependencies
 include_recipe 'build-essential'
 
@@ -74,7 +75,6 @@ execute "make install #{tarball}" do
   user "root"
   group "root"
 #  not_if {(target and File.exists?(target))}
-  notifies :restart, 'runit_service[nginx]'
 end
 
 execute 'openssl dhparam -out dhparam.pem 4096' do
@@ -82,4 +82,3 @@ execute 'openssl dhparam -out dhparam.pem 4096' do
 	not_if { ::File.exists?("/etc/ssl/certs/dhparam.pem")}
 end
 
-include_recipe 'nginx::common_config'

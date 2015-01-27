@@ -1,0 +1,21 @@
+DEPENDENCIES
+  nginx
+    path: .
+    metadata: true
+
+GRAPH
+  build-essential (2.1.3)
+  chef_handler (1.1.6)
+  minitest-handler (1.3.2)
+    chef_handler (>= 0.0.0)
+  nginx (0.1.0)
+    build-essential (>= 0.0.0)
+    minitest-handler (>= 0.0.0)
+    runit (>= 0.0.0)
+  runit (1.5.14)
+    build-essential (>= 0.0.0)
+    yum (~> 3.0)
+    yum-epel (>= 0.0.0)
+  yum (3.5.2)
+  yum-epel (0.6.0)
+    yum (~> 3.0)
