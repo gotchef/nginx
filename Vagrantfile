@@ -7,10 +7,12 @@
 VAGRANTFILE_VERSION = 2
 
 Vagrant.configure(VAGRANTFILE_VERSION) do |config|
-	config.vm.box = "chef/centos-7.0"
+	config.vm.box = "centos-6.6-x86_64"
+	#	# chef/centos-6.5"
+#	config.vm.box = "hashicorp/precise64"
 	config.vm.provider "virtualbox" do |v|
 		v.memory = 1024
-		v.cpus = 2
+		v.cpus = 4
 	end
 	config.vm.provider "vmware_fusion" do |v|
 		v.vmx["memsize"] = "1024"
@@ -20,6 +22,8 @@ Vagrant.configure(VAGRANTFILE_VERSION) do |config|
 	config.berkshelf.enabled = true
 	
 	config.vm.provision "chef_zero" do |chef|
+		chef.cookbooks_path = "../../gotchef"
+#		chef.add_recipe "apt"
 		chef.add_recipe "nginx::install"
 		chef.add_recipe "nginx::service"
 	end

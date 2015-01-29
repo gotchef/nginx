@@ -26,6 +26,7 @@ end
 #dependencies
 packages = value_for_platform_family(
   %w(rhel fedora) => %w(pcre-devel openssl-devel httpd-devel zlib zlib-devel GeoIP GeoIP-devel gd-progs gd-devel),
+  %w(debian ubuntu) => %w(libpcre3 libpcre3-dev libssl-dev libgd2-xpm-dev libgeoip-dev),
   %w(default)     => %w(libpcre3 libpcre3-dev libssl-dev)
 )
 
@@ -77,8 +78,10 @@ execute "make install #{tarball}" do
 #  not_if {(target and File.exists?(target))}
 end
 
+environment =  node["chef_environment"] || node["environment"]
+
 execute 'openssl dhparam -out dhparam.pem 4096' do
 	cwd '/etc/ssl/certs'
-	not_if { ::File.exists?("/etc/ssl/certs/dhparam.pem")}
+	not_if { environment != "production" or ::File.exists?("/etc/ssl/certs/dhparam.pem")}
 end
 

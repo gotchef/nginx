@@ -5,6 +5,7 @@ license          'Copyright 2014, Krave-n'
 description      'Configures nginx'
 version          '0.1'
 
+depends 'apt'
 depends 'build-essential'
 depends 'minitest-handler'
 depends 'runit'
