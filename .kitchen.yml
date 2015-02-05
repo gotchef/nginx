@@ -1,0 +1,27 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+platforms:
+  - name: ubuntu-12.04
+    driver:
+      box: hashicorp/precise64
+    customize:
+      memory: 512
+      cpus: 2
+  - name: centos-6.6
+    driver:
+      box: kraveio/centos-6.6
+    customize:
+      memory: 512
+      cpus: 2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[nginx::default]
+    attributes: {}

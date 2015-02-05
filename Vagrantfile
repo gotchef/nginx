@@ -7,17 +7,10 @@
 VAGRANTFILE_VERSION = 2
 
 Vagrant.configure(VAGRANTFILE_VERSION) do |config|
-	config.vm.box = "centos-6.6-x86_64"
-	#	# chef/centos-6.5"
 #	config.vm.box = "hashicorp/precise64"
-	config.vm.provider "virtualbox" do |v|
-		v.memory = 1024
-		v.cpus = 4
-	end
-	config.vm.provider "vmware_fusion" do |v|
-		v.vmx["memsize"] = "1024"
-		v.vmx["numvcpus"] = "2"
-	end
+	#config.vm.box = "kraveio/centos-6.6"
+	config.vm.box = "centos-6.6-x86_64"
+	#config.vm.box = "chef/centos-6.6"
 	config.omnibus.chef_version = :latest
 	config.berkshelf.enabled = true
 	
