@@ -6,7 +6,8 @@
 include_recipe "aws-util::opsworks_hosts"
 
 node[:deploy].each do |app_name, deploy|
-	if !node[:me][:layers].include? deploy[:document_root].downcase
+	# only do this check for opsworks
+	if !node[:opsworks].nil? and !node[:me][:layers].include? deploy[:document_root].downcase
 		Chef::Log.info("skipping deployment of site #{app_name}. opsworks application document root must be in the following layers #{node[:me][:layers].join(", ")}")
 		next
 	end
